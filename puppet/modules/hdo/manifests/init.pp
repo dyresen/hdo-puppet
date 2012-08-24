@@ -186,5 +186,33 @@ class hdo {
   }
 
   a2mod { "rewrite": ensure => present }
+
+  if $postgresql_hdo_password  {} else { $postgresql_hdo_password  = "dont-use-this" }
+
+  class { 'postgresql::server':
+    config_hash => {
+        'postgres_password' => $postgresql_root_password,
+    },
+
+    # no idea why this is necessary - either the module isn't properly tested on ubuntu,
+    # or something is non-standard about our VM image.
+
+    service_name     => 'postgresql', # defaults to postgresql-9.1
+    service_provider => init          # defaults to upstart
+  }
+
+  postgresql::db { "hdo_production":
+    user     => 'hdo',
+    password => postgresql_password('hdo', $postgresql_hdo_password)
+  }
+
+  file { "/home/hdo/.hdo-database-pg.yml":
+    owner   => "hdo",
+    mode    => '0600',
+    # See modules/hdo/templates/database.yml
+    content => template("hdo/database-pg.yml"),
+    require => File["/home/hdo"]
+  }
+
 }
 

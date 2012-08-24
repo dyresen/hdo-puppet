@@ -1,0 +1,7 @@
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: hdo_production
+  pool: 5
+  username: hdo
+  password: <%= postgresql_hdo_password %>
