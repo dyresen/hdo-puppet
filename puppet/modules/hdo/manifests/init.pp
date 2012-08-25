@@ -48,15 +48,16 @@ class hdo {
   }
 
   define gem ($name) {
-    exec { "$name-gem":
+    debug("declaring gem-$name")
+    exec { "gem-$name":
       command => "gem1.9.3 install $name",
       onlyif  => "gem1.9.3 search -i $name | grep false",
       require => [Package['ruby1.9.3']]
     }
   }
 
-  gem { "bundler": name => bundler}
-  gem { "builder": name => builder}
+  gem { "bundler":  name => bundler }
+  gem { "builder":  name => builder }
   gem { "nokogiri": name => nokogiri, require => Package['libxml2', 'libxml2-dev', 'libxslt1-dev']}
 
   package { "ruby":
