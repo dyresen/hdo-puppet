@@ -7,11 +7,11 @@ Vagrant::Config.run do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "lucid32"
+  config.vm.box = "oneiric32"
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
-  config.vm.box_url = "http://files.vagrantup.com/lucid32.box"
+  config.vm.box_url = "http://vagrant.cedric-ziel.com/oneiric32.box"
 
   # Boot with a GUI so you can see the screen. (Default is headless)
   # config.vm.boot_mode = :gui
@@ -58,6 +58,7 @@ Vagrant::Config.run do |config|
     puppet.manifests_path = "puppet"
     puppet.module_path   = "puppet/modules"
     puppet.manifest_file  = "base.pp"
+    puppet.options = "--verbose --debug"
   end
 
   # Enable provisioning with chef solo, specifying a cookbooks path, roles
